@@ -4,12 +4,9 @@ from digit_msgs.srv import *
 import rospy 
 
 class Comms:
-    def __init__(self):
-        print("starting node")
-        rospy.init_node("ll_comms")
-        print("waiting for observation service")
-        rospy.wait_for_service("observation_service") 
-        print("detected observation service")
+    def __init__(self): 
+        rospy.init_node("ll_comms") 
+        rospy.wait_for_service("observation_service")  
         self.observation_channel = rospy.ServiceProxy("observation_service", Digit_Observation_srv)
         self.command_channel = rospy.ServiceProxy("command_service", Digit_Commands_srv)
         # self.velocity_command_channel = rospy.ServiceProxy("walker_server/walking_service", Digit_Walker_srv)
