@@ -1,1 +1,4 @@
 /Manifest.toml
+src/lowlevel/sim/ws/build
+src/lowlevel/sim/ws/devel
+.CondaPkg
