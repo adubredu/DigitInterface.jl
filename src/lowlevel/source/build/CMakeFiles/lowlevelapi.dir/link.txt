@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC   -shared -Wl,-soname,liblowlevelapi.so -o liblowlevelapi.so CMakeFiles/lowlevelapi.dir/lowlevelapi.c.o ../libartl/libartl.a 

@@ -1,4 +1,7 @@
 # /Manifest.toml
-src/lowlevel/sim/ws/build
-src/lowlevel/sim/ws/devel
+src/ros_lowlevel/sim/ws/build
+src/ros_lowlevel/sim/ws/devel
 .CondaPkg
+src/ros_lowlevel/__pycache__
+src/gripper/__pycache__
+src/camera/__pycache__

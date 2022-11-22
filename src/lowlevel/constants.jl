@@ -1,4 +1,6 @@
-ll = joinpath(@__DIR__, "cpp_src/build/lib/liblowlevelapi")
+ll = joinpath(@__DIR__, "source/liblowlevelapi")
+robot_ip = "10.10.1.1"
+sim_ip = "127.0.0.1"
 LeftHipRoll = 1
 LeftHipYaw = 2
 LeftHipPitch = 3

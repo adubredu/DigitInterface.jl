@@ -5,34 +5,37 @@ using WebSockets
 using JSON
 using Rotations
 
-include("lowlevel/constants.jl")
 include("highlevel/hlcomms.jl")
 include("compile.jl")
-include("get.jl")
-include("set.jl")
+include("lowlevel/types.jl")
+include("lowlevel/constants.jl")
+include("lowlevel/utils.jl")
+include("lowlevel/initialize.jl")
+include("lowlevel/get.jl")
+include("lowlevel/set.jl")
 
 const Gripper = PythonCall.pynew()
-const LLComms = PythonCall.pynew()
+#const LLComms = PythonCall.pynew()
 const Camera = PythonCall.pynew()
 
 function __init__() 
     packagepath = dirname(@__DIR__)
-    gripperpath = joinpath(packagepath, "src/lowlevel")
-    llcomspath = joinpath(packagepath, "src/lowlevel") 
+    gripperpath = joinpath(packagepath, "src/gripper")
+    #llcomspath = joinpath(packagepath, "src/lowlevel") 
     camerapath = joinpath(packagepath, "src/camera")
-    rospath = joinpath(llcomspath, "sim/ws/devel/lib/python2.7/dist-packages")
+    #rospath = joinpath(llcomspath, "sim/ws/devel/lib/python2.7/dist-packages")
     sys = pyimport("sys")
     sys.path.append(gripperpath)
-    sys.path.append(llcomspath) 
-    sys.path.append(rospath)
+    #sys.path.append(llcomspath) 
+    #sys.path.append(rospath)
     sys.path.append(camerapath)
     PythonCall.pycopy!(Gripper, pyimport("gripper"))
-    PythonCall.pycopy!(LLComms, pyimport("ll_comms"))
+    #PythonCall.pycopy!(LLComms, pyimport("ll_comms"))
     PythonCall.pycopy!(Camera, pyimport("pointcloud_server"))
 end  
 
 export Gripper,
-        LLComms,
+        #LLComms,
         Camera,
         set_locomotion_mode,
         set_lowlevel_mode
@@ -42,7 +45,47 @@ export compile
 export send_torque_command,
        get_generalized_coordinates
 
-# llcomms = LLComms.Comms()
-# export llcomms
+# lowlevel
+# inits
+export llapi_init,
+       lapi_init_custom,
+       llapi_get_observation, 
+       llapi_get_error_shutdown_delay, 
+       llapi_connected,
+       connect_to_robot
 
-end
+# types 
+export llapi_observation_t,
+       llapi_command_t,
+       llapi_limits_t,
+       motor_obs_t,
+       llapi_motor_t
+
+# getters 
+export  llapi_get_observation,
+        get_motor_positions,
+        get_motor_velocities,
+        get_motor_torques,
+        get_base_translation,
+        get_base_orientation,
+        get_base_linear_velocity,
+        get_base_angular_velocity,
+        get_imu_magnetic_field,
+        get_imu_linear_acceleration,
+        get_imu_angular_velocity,
+        get_joint_positions,
+        get_joint_velocities,
+        get_torque_limits,
+        get_damping_limits,
+        get_velocity_limits,
+	get_generalized_coordinates
+
+# setters
+export send_command,
+       llapi_send_command
+
+# constants
+export sim_ip,
+	robot_ip
+
+end # module

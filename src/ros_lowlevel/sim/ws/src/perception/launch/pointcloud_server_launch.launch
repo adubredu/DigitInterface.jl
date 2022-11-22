@@ -1,0 +1,12 @@
+<launch>
+    <arg name="align_depth"       default="true"/>
+    <arg name="filters"           default="pointcloud"/>
+
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="align_depth" value="$(arg align_depth)"/>
+        <arg name="filters"     value="$(arg filters)"/>
+    </include>
+
+    <node name="cloud_server_node" pkg="perception" type="pointcloud_server" 
+        output="screen" cwd="node"/>
+</launch>
