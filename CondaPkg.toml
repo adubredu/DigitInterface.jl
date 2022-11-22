@@ -1,0 +1,7 @@
+[deps]
+python = "=3.8"
+pyserial = ""
+
+[pip.deps]
+rospkg = ""
+catkin-pkg = ""

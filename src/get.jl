@@ -20,8 +20,8 @@ function convert_to_euler_rates(quat, ω)
     return [yaw_dot, pitch_dot, roll_dot]
 end
 
-function get_generalized_coordinates() 
-    observation = llcomms.get_observation()
+function get_generalized_coordinates(comms) 
+    observation = comms.get_observation()
     q_pos = [pyconvert(Float64, q) for q in [observation.base_translation...]]
     qdot_pos = [pyconvert(Float64, q) for q in[observation.base_linear_velocity...]] 
     q_angvel = [pyconvert(Float64, q) for q in [observation.base_angular_velocity...]] 

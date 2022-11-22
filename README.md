@@ -1,1 +1,1 @@
-# DigitInterface
+# DigitInterface.jl

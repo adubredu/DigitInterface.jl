@@ -1,16 +1,19 @@
 import sys
-sys.path.append("src/systems/digit_whole_body/sim/ws/devel/lib/python2.7/dist-packages")
+sys.path.append("src/lowlevel/sim/ws/devel/lib/python2.7/dist-packages")
 from digit_msgs.srv import *
 import rospy 
 
 class Comms:
     def __init__(self):
+        print("starting node")
         rospy.init_node("ll_comms")
+        print("waiting for observation service")
         rospy.wait_for_service("observation_service") 
+        print("detected observation service")
         self.observation_channel = rospy.ServiceProxy("observation_service", Digit_Observation_srv)
         self.command_channel = rospy.ServiceProxy("command_service", Digit_Commands_srv)
-        self.velocity_command_channel = rospy.ServiceProxy("walker_server/walking_service", Digit_Walker_srv)
-        self.vel_req = Digit_Walker_srvRequest()
+        # self.velocity_command_channel = rospy.ServiceProxy("walker_server/walking_service", Digit_Walker_srv)
+        # self.vel_req = Digit_Walker_srvRequest()
         self.cmd_req = Digit_Commands_srvRequest()
 
     def get_observation(self):
