@@ -13,6 +13,7 @@ Rotations = "6038ab10-8711-5258-84ad-4b1120ba62dc"
 WebSockets = "104b5d7c-a370-577a-8038-80a2059c5097"
 
 [compat]
+Revise = "3"
 julia = "1"
 
 [extras]
