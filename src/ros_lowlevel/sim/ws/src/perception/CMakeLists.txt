@@ -23,8 +23,8 @@ generate_messages(
 )
  
 catkin_package(
- INCLUDE_DIRS include
- LIBRARIES perception
+#  INCLUDE_DIRS include
+#  LIBRARIES perception
  CATKIN_DEPENDS realsense2_camera roscpp rospy sensor_msgs std_msgs tf
 #  DEPENDS system_lib
 )
