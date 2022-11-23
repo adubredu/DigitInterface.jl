@@ -28,7 +28,7 @@ end
 
 function connect_to_robot(observation, command)
     val = 0
-    printstyled("connecting...\n"; color=:green)
+    printstyled("connecting...\n"; color=:blue)
     while !(val == 1) 
         val = llapi_get_observation(Ref(observation)) 
         llapi_send_command(Ref(command))  
