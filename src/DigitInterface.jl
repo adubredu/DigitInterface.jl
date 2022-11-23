@@ -1,5 +1,10 @@
 module DigitInterface
 
+wspath = joinpath(@__DIR__, "ros_lowlevel/sim/ws") 
+wssource = joinpath(wspath, "devel/setup.bash")
+run(`catkin_make -C $wspath`)
+run(`bash -c 'source '$wssource''`)
+
 using PythonCall
 using WebSockets
 using JSON
