@@ -1,6 +1,8 @@
 module DigitInterface
 
 wspath = joinpath(@__DIR__, "ros_lowlevel/sim/ws") 
+llapipath = joinpath(wspath, "src/digit_llapi/libs/libartl")
+run(`make -C $llapipath`)
 wssource = joinpath(wspath, "devel/setup.bash")
 run(`catkin_make -C $wspath`)
 run(`bash -c 'source '$wssource''`)
