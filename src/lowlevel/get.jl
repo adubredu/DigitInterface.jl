@@ -151,6 +151,87 @@ function get_generalized_coordinates(obs::llapi_observation_t)
     return (q_all, qdot_all, q_motors)
 end 
 
+# replaces toe_pitch and toe_roll with toeA and toeB respectively
+# convenient for whole-body control
+function get_generalized_coordinates2(obs::llapi_observation_t)
+    llapi_get_observation(Ref(obs))
+    q_pos = obs.base.translation
+    qdot_pos = obs.base.linear_velocity
+    q_angvel = obs.base.angular_velocity
+    quat = [obs.base.orientation.w, obs.base.orientation.x, obs.base.orientation.y, obs.base.orientation.z]
+    q_joints = obs.joint.position
+    q_motors = obs.motor.position 
+    qdot_joints = obs.joint.velocity
+    qdot_motors = obs.motor.velocity
+    q_euler = quat_to_ypr(quat)
+    qdot_euler = convert_to_euler_rates(quat, q_angvel) 
+
+    Rz = RotZ(q_euler[1])
+    qdot_pos = Rz * collect(qdot_pos)
+
+    q_base = [q_pos..., q_euler...]
+    qdot_base = [qdot_pos..., qdot_euler...]
+
+    q_leg_left = [q_motors[LeftHipRoll],
+                  q_motors[LeftHipYaw],
+                  q_motors[LeftHipPitch],
+                  q_motors[LeftKnee],
+                  q_joints[LeftShin],
+                  q_joints[LeftTarsus],
+                  q_motors[LeftToeA],
+                  q_motors[LeftToeB]]
+    qdot_leg_left = [qdot_motors[LeftHipRoll],
+                  qdot_motors[LeftHipYaw],
+                  qdot_motors[LeftHipPitch],
+                  qdot_motors[LeftKnee],
+                  qdot_joints[LeftShin],
+                  qdot_joints[LeftTarsus],
+                  qdot_motors[LeftToeA],
+                  qdot_motors[LeftToeB]]
+    q_leg_right = [q_motors[RightHipRoll],
+                  q_motors[RightHipYaw],
+                  q_motors[RightHipPitch],
+                  q_motors[RightKnee],
+                  q_joints[RightShin],
+                  q_joints[RightTarsus],
+                  q_motors[RightToeA],
+                  q_motors[RightToeB]]
+    qdot_leg_right = [qdot_motors[RightHipRoll],
+                  qdot_motors[RightHipYaw],
+                  qdot_motors[RightHipPitch],
+                  qdot_motors[RightKnee],
+                  qdot_joints[RightShin],
+                  qdot_joints[RightTarsus],
+                  qdot_motors[RightToeA],
+                  qdot_motors[RightToeB]]
+    
+    q_arm_left = [q_motors[LeftShoulderRoll],
+                  q_motors[LeftShoulderPitch],
+                  q_motors[LeftShoulderYaw],
+                  q_motors[LeftElbow]]
+    qdot_arm_left = [qdot_motors[LeftShoulderRoll],
+                  qdot_motors[LeftShoulderPitch],
+                  qdot_motors[LeftShoulderYaw],
+                  qdot_motors[LeftElbow]]
+    q_arm_right = [q_motors[RightShoulderRoll],
+                   q_motors[RightShoulderPitch],
+                   q_motors[RightShoulderYaw],
+                   q_motors[RightElbow]]
+    qdot_arm_right = [qdot_motors[RightShoulderRoll],
+                      qdot_motors[RightShoulderPitch],
+                      qdot_motors[RightShoulderYaw],
+                      qdot_motors[RightElbow]]
+    
+    q_body = [q_leg_left;q_arm_left;q_leg_right;q_arm_right]
+    qdot_body = [qdot_leg_left;qdot_arm_left;qdot_leg_right;qdot_arm_right]
+
+    q_all = [q_base;q_body]
+    qdot_all = [qdot_base;qdot_body]
+
+    return (q_all, qdot_all, q_motors)
+end 
+
+
 ## ROS interface
 # function get_ros_observation()
 #     channel = ServiceProxy(observation_service_name, Digit_Observation_srv)

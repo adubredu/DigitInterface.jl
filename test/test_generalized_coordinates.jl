@@ -24,7 +24,7 @@ end
 connect_to_robot(observation, command)  
 for i=1:100
     @time begin
-        q, qdot, qmotors = get_generalized_coordinates(observation)
+        q, qdot, qmotors = get_generalized_coordinates2(observation)
     end
     @show q[1]
 end

@@ -69,7 +69,8 @@ export llapi_observation_t,
 
 # getters 
 # primary getters
-export get_generalized_coordinates
+export get_generalized_coordinates,
+       get_generalized_coordinates2
 
 # secondary getters
 export  llapi_get_observation,
