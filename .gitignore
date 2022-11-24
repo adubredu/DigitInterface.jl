@@ -5,3 +5,5 @@ src/ros_lowlevel/sim/ws/devel
 src/ros_lowlevel/__pycache__
 src/gripper/__pycache__
 src/camera/__pycache__
+test/ccall_debug/build
+src/lowlevel/source/build

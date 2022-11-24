@@ -3,10 +3,12 @@ function llapi_send_command(cmd::Ref{llapi_command_t})
 end
 
 function send_command(torques::Vector{Float64}, velocities::Vector{Float64},
-        dampings::Vector{Float64}, fallback_opmode::Any, apply_command::Bool)
-        @ccall ll.send_command(torques::Ref{Cdouble}, velocities::Ref{Cdouble}, dampings::Ref{Cdouble}, fallback_opmode::Cint, apply_command::Bool)::Cvoid
+            dampings::Vector{Float64}, fallback_opmode::Any, apply_command::Bool)
+        motors = Tuple([llapi_motor_t(t, v, d) for (t, v, d) in zip(torques, velocities, dampings)])
+        cmd = llapi_command_t(motors, fallback_opmode, apply_command)
+        llapi_send_command(Ref(cmd))
 end
-
+ 
 # function send_ros_motor_command(fallback_opmode::Int64, apply_command::Bool,
 #     motor_torque::Vector{Float64}, motor_velocity::Vector{Float64},
 #     motor_damping::Vector{Float64})

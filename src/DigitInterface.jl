@@ -55,8 +55,7 @@ export send_torque_command,
 # lowlevel
 # inits
 export llapi_init,
-       lapi_init_custom,
-       llapi_get_observation, 
+       lapi_init_custom,  
        llapi_get_error_shutdown_delay, 
        llapi_connected,
        connect_to_robot
@@ -69,6 +68,10 @@ export llapi_observation_t,
        llapi_motor_t
 
 # getters 
+# primary getters
+export get_generalized_coordinates
+
+# secondary getters
 export  llapi_get_observation,
         get_motor_positions,
         get_motor_velocities,
@@ -84,8 +87,7 @@ export  llapi_get_observation,
         get_joint_velocities,
         get_torque_limits,
         get_damping_limits,
-        get_velocity_limits,
-	get_generalized_coordinates
+        get_velocity_limits
 
 # setters
 export send_command,

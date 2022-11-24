@@ -1,6 +1,6 @@
-using Revise 
 using DigitInterface
 
+# reference motor positions
 ref = [0.32869133647921467, 
         -0.02792180592249217, 
         0.3187324455828634, 
@@ -22,11 +22,13 @@ ref = [0.32869133647921467,
         -0.00017832526659170586, 
         0.13910089847647372]
 
-  
+# PD parameters
   Kp = 1050.0
   Kd = 0.5
 
-  if !@isdefined publisher_address
+# connection parameters
+# replace sim_ip with robot_ip to connect to physical Digit
+if !@isdefined publisher_address
     publisher_address = sim_ip
     llapi_init(publisher_address)    
     observation = llapi_observation_t()
@@ -34,11 +36,15 @@ ref = [0.32869133647921467,
     observation = llapi_observation_t() 
     command.apply_command = false 
 end
+
+# connecting to digit
 connect_to_robot(observation, command) 
 limits = get_damping_limits()
  
+# run controller for 10e5 iterations
 for i=1:10e5
-    q, qdot, qmotors = get_generalized_coordinates(observation)
+    _, _, qmotors = get_generalized_coordinates(observation)
+
     torques, velocities, dampings = Float64[], Float64[], Float64[]
     
     for i=1:DigitInterface.NUM_MOTORS
@@ -46,11 +52,11 @@ for i=1:10e5
         push!(velocities, 0.0)
         push!(dampings, Kd * limits[i])
     end
+
     fallback_opmode = DigitInterface.Locomotion
     apply_command = true
      send_command(torques, velocities, dampings, fallback_opmode,
-        apply_command) 
-    # println("running")
+        apply_command)  
     sleep(1e-6)  
 end
  

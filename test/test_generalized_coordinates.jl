@@ -18,13 +18,13 @@ if !@isdefined publisher_address
     observation = llapi_observation_t()
     command = llapi_command_t()  
     observation = llapi_observation_t() 
-    command.apply_command = false 
+    # command.apply_command = false 
     # connect_to_robot(observation, command)  
 end
 connect_to_robot(observation, command)  
 for i=1:100
     @time begin
-        q, qdot, qmotors = get_generalized_coordinates(Ref(observation))
+        q, qdot, qmotors = get_generalized_coordinates(observation)
     end
     @show q[1]
 end

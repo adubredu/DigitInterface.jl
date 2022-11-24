@@ -73,21 +73,21 @@ function get_velocity_limits()
     return unsafe_wrap(Array, val, NUM_MOTORS) 
 end
 
-function get_generalized_coordinates(obs::Ref{llapi_observation_t})
-    llapi_get_observation(obs)
-    q_pos = get_base_translation(obs)
-    qdot_pos = get_base_linear_velocity(obs)
-    q_angvel = get_base_angular_velocity(obs)
-    quat = get_base_orientation(obs)
-    q_joints = get_joint_positions(obs)
-    q_motors = get_motor_positions(obs)
-    qdot_joints = get_joint_velocities(obs)
-    qdot_motors = get_motor_velocities(obs)
+function get_generalized_coordinates(obs::llapi_observation_t)
+    llapi_get_observation(Ref(obs))
+    q_pos = obs.base.translation
+    qdot_pos = obs.base.linear_velocity
+    q_angvel = obs.base.angular_velocity
+    quat = [obs.base.orientation.w, obs.base.orientation.x, obs.base.orientation.y, obs.base.orientation.z]
+    q_joints = obs.joint.position
+    q_motors = obs.motor.position
+    qdot_joints = obs.joint.velocity
+    qdot_motors = obs.motor.velocity
     q_euler = quat_to_ypr(quat)
     qdot_euler = convert_to_euler_rates(quat, q_angvel) 
 
     Rz = RotZ(q_euler[1])
-    qdot_pos = Rz * qdot_pos
+    qdot_pos = Rz * collect(qdot_pos)
 
     q_base = [q_pos..., q_euler...]
     qdot_base = [qdot_pos..., qdot_euler...]
