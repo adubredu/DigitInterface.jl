@@ -6,7 +6,7 @@ and its accessories.
 * Fast querying of robot's state estimate. 
   State estimation runs at 34.5kHz, which is over 100x faster than ROS alternative.
   Below is the benchmarking results.
-  
+
   ![](media/state_estimation.png)
 
 
@@ -21,7 +21,7 @@ and its accessories.
 ## Installation
 1. Open your Julia REPL by typing  `julia` in your terminal.
 2. Press `]` on your keyboard to enter the package manager
-3. Enter command `add https://github.com/adubredu/DigitInterface.jl"` and press 
+3. Enter command `add https://github.com/adubredu/DigitInterface.jl` and press 
 `Enter` on your keyboard to install this package.
 4. Press the `Backspace` key on your keyboard to return to the REPL
 
