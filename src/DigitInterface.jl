@@ -1,19 +1,19 @@
 module DigitInterface
 
-wspath = joinpath(@__DIR__, "ros_lowlevel/sim/ws") 
-llapipath = joinpath(wspath, "src/digit_llapi/libs/libartl")
-run(`make -C $llapipath`)
-wssource = joinpath(wspath, "devel/setup.bash")
-run(`catkin_make -C $wspath`)
-run(`bash -c 'source '$wssource''`)
+# wspath = joinpath(@__DIR__, "ros_lowlevel/sim/ws") 
+# llapipath = joinpath(wspath, "src/digit_llapi/libs/libartl")
+# run(`make -C $llapipath`)
+# wssource = joinpath(wspath, "devel/setup.bash")
+# run(`catkin_make -C $wspath`)
+# run(`bash -c 'source '$wssource''`)
 
-using PythonCall
+# using PythonCall
 using WebSockets
 using JSON
 using Rotations
 
-include("highlevel/hlcomms.jl")
-include("compile.jl")
+# include("highlevel/hlcomms.jl")
+# include("compile.jl")
 include("lowlevel/types.jl")
 include("lowlevel/constants.jl")
 include("lowlevel/utils.jl")
@@ -21,29 +21,29 @@ include("lowlevel/initialize.jl")
 include("lowlevel/get.jl")
 include("lowlevel/set.jl")
 
-const Gripper = PythonCall.pynew()
+# const Gripper = PythonCall.pynew()
 #const LLComms = PythonCall.pynew()
-const Camera = PythonCall.pynew()
+# const Camera = PythonCall.pynew()
 
-function __init__() 
-    packagepath = dirname(@__DIR__)
-    gripperpath = joinpath(packagepath, "src/gripper")
-    llcomspath = joinpath(packagepath, "src/ros_lowlevel") 
-    camerapath = joinpath(packagepath, "src/camera")
-    rospath = joinpath(llcomspath, "sim/ws/devel/lib/python2.7/dist-packages")
-    sys = pyimport("sys")
-    sys.path.append(gripperpath)
-    #sys.path.append(llcomspath) 
-    sys.path.append(rospath)
-    sys.path.append(camerapath)
-    PythonCall.pycopy!(Gripper, pyimport("gripper"))
-    #PythonCall.pycopy!(LLComms, pyimport("ll_comms"))
-    PythonCall.pycopy!(Camera, pyimport("pointcloud_server"))
-end  
+# function __init__() 
+#     packagepath = dirname(@__DIR__)
+#     gripperpath = joinpath(packagepath, "src/gripper")
+#     llcomspath = joinpath(packagepath, "src/ros_lowlevel") 
+#     camerapath = joinpath(packagepath, "src/camera")
+#     rospath = joinpath(llcomspath, "sim/ws/devel/lib/python2.7/dist-packages")
+#     sys = pyimport("sys")
+#     sys.path.append(gripperpath)
+#     #sys.path.append(llcomspath) 
+#     sys.path.append(rospath)
+#     sys.path.append(camerapath)
+#     PythonCall.pycopy!(Gripper, pyimport("gripper"))
+#     #PythonCall.pycopy!(LLComms, pyimport("ll_comms"))
+#     PythonCall.pycopy!(Camera, pyimport("pointcloud_server"))
+# end  
 
 export Gripper,
         #LLComms,
-        Camera,
+        # Camera,
         set_locomotion_mode,
         set_lowlevel_mode
 
