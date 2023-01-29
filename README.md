@@ -1,6 +1,5 @@
 # DigitInterface.jl
-A fast, low-latency Julia package for directly interfacing with the Digit Robot 
-and its accessories.
+A fast, low-latency Julia package for directly interfacing with the Digit Robot.
 
 ## Features
 * Fast querying of robot's state estimate. 

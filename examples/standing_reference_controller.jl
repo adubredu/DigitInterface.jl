@@ -1,5 +1,9 @@
 using DigitInterface
 
+#=
+
+=#
+
 # reference motor positions
 ref = [0.32869133647921467, 
         -0.02792180592249217, 

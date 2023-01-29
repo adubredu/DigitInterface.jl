@@ -1,5 +1,5 @@
 function set_locomotion_mode(;host=:sim)
-    hostip = host == :sim ? "ws://localhost:8080" : "ws://10.10.2.1:8080"
+    hostip = host == :sim ? "ws://localhost:8080" : "ws://10.10.1.1:8080"
     WebSockets.open(hostip, subprotocol="json-v1-agility") do ws
         msg = ["request-privilege", Dict("privilege" =>"change-action-command", 
         "priority" => 0)]
@@ -18,7 +18,7 @@ function set_locomotion_mode(;host=:sim)
 end
 
 function set_lowlevel_mode(;host=:sim)
-    hostip = host == :sim ? "ws://localhost:8080" : "ws://10.10.2.1:8080"
+    hostip = host == :sim ? "ws://localhost:8080" : "ws://10.10.1.1:8080"
     WebSockets.open(hostip, subprotocol="json-v1-agility") do ws
         msg = ["request-privilege", Dict("privilege" =>"change-action-command", 
         "priority" => 0)]
